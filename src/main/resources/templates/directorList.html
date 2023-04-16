@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<title>Movie list</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<style th:inline="css">
+.myStyle {
+	background-color: #A9A9A9;
+}
+</style>
+
+</head>
+<body class="myStyle">
+	<h1>Directorlist</h1>
+	<a th:href="@{/movielist}" class="btn btn-info">To the Movielist</a>
+	<a th:href="@{/genrelist}" class="btn btn-info">To the Genrelist</a>
+	<a th:href="@{/login}" class="btn btn-info">Login</a>
+	<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method=
+	"post" >
+	<input type="submit" value="Sign Out"  class="btn btn-info"/>
+	</form>
+	<div class="table-responsive">
+		<table class="table table-bordered table-active">
+			<thead class="thead-dark">
+				<tr>
+					<th>First name</th>
+					<th>Last name</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="director : ${directors}">
+					<td th:text="${director.firstName} "></td>
+					<td th:text="${director.lastName}"></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete-director/{id}(id=${director.directorId})}"
+						class="btn btn-dark">Delete</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit-director/{id}(id=${director.directorId})}"
+						class="btn btn-secondary">Edit</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<a sec:authorize="hasAuthority('ADMIN')" href="/add-director" class="btn btn-info">Add director</a>
+	</div>
+</body>
+</html>

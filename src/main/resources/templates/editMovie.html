@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Movielist</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+	<h1>Edit movie</h1>
+	<div>
+		<form th:object="${movie}" th:action="@{../save-movie}" action="#"
+			method="post">
+			<input type="hidden" id="id" th:field="*{id}" /> <label for="name">Name</label>
+			<input type="text" id="name" th:field="*{name}" /> <label
+				for="duration">Duration</label> <input type="text" id="duration"
+				th:field="*{duration}" /> <label for="genrelist">Genre</label> <select
+				id="genrelist" th:field="*{genre.genreId}" class="form-control">
+				<option th:each="genre: ${genres}" th:value="${genre.genreId}"
+					th:text="${genre.name}"></option>
+			</select>
+			<label for="directorlist">Director</label>
+				<select id="directorlist" th:field="*{director}" class="form-control"> 
+				<option th:each="director: ${directors}" th:value="${director.directorId}" 
+				th:text="${director.lastName}"></option>
+				</select>
+				<div style="clear: both; display: block; height: 10px;"></div>
+			 <input class="btn btn-success" type="submit" value="Save"></input>
+
+
+		</form>
+	</div>
+</body>
+</html>

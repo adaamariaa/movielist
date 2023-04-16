@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<title>Movie list</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+<style th:inline="css">
+.myStyle {
+	background-color: #A9A9A9;
+}
+</style>
+
+</head>
+<body class="myStyle">
+	<h1>Genrelist</h1>
+	<a th:href="@{/movielist}" class="btn btn-info">To the Movielist</a>
+	<a th:href="@{/directorlist}" class="btn btn-info">To the Directorlist</a>
+	<a th:href="@{/login}" class="btn btn-info">Login</a>
+	<form sec:authorize="hasAuthority('ADMIN')" th:action="@{/logout}" method=
+	"post" >
+	<input type="submit" value="Sign Out"  class="btn btn-info"/>
+	</form>
+	<div class="table-responsive">
+		<table class="table table-bordered table-active">
+			<thead class="thead-dark">
+				<tr>
+					<th>Name</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="genre : ${genres}">
+					<td th:text="${genre.name} "></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete-genre/{id}(id=${genre.genreId})}"
+						class="btn btn-dark">Delete</a></td>
+					<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit-genre/{id}(id=${genre.genreId})}"
+						class="btn btn-secondary">Edit</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<a sec:authorize="hasAuthority('ADMIN')" href="/add-genre" class="btn btn-info">Add Genre</a>
+	</div>
+</body>
+</html>

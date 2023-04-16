@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+<title>Movie List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+<body>
+	<h1>Add movie</h1>
+	<div>
+		 <form th:object="${movie}" th:action="@{save-movie}" action="#" method="post">
+		 	<label for="name">Name</label>
+			 <input type="text" id="name" th:field="*{name}" />
+			 <label for="duration">Duration</label>
+			 <input type="text" id="duration" th:field="*{duration}" />
+			 <label for="genrelist">Genre</label>
+				<select id="genrelist" th:field="*{genre}" class="form-control"> 
+				<option th:each="genre: ${genres}" th:value="${genre.genreId}" 
+				th:text="${genre.name}"></option>
+				</select>
+				<label for="directorlist">Director</label>
+				<select id="directorlist" th:field="*{director}" class="form-control"> 
+				<option th:each="director: ${directors}" th:value="${director.directorId}" 
+				th:text="${director.lastName}"></option>
+				</select>
+			 <input sec:authorize="hasAuthority('ADMIN')" type="submit" value="Save"></input>
+		 </form>
+	</div>
+</body>
+</html>
